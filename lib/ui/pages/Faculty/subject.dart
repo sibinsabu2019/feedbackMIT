@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:feedback/provider/facultyProvider.dart';
+import 'package:feedback/ui/pages/Faculty/FacReport.dart';
 import 'package:feedback/ui/pages/Faculty/barchart.dart';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class FacultySub extends StatelessWidget {
             child: GestureDetector(onTap: ()
             {
                 Provider.of<facultyProvider>(context,listen: false).selectedsubject=documentSnapshot["subject"];
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const  Barchart(),));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const  FacReport(),));
             },
               child: ListTile(title: Text(documentSnapshot["subject"]),tileColor: Colors.grey[300],)),
           );

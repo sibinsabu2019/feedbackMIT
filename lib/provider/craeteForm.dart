@@ -213,14 +213,21 @@ class CreateForm extends ChangeNotifier {
        for(int i =0;i<querySnapshot.size;i++)
        {
         Map<String,dynamic>questinList = {};
+        Map<String,dynamic>RemovedList={};
          DocumentSnapshot documentSnapshot=querySnapshot.docs[i];
+
          questinList=documentSnapshot.data() as Map<String,dynamic>;
+         RemovedList=documentSnapshot.data() as Map<String,dynamic>;
+         RemovedList.remove("qstn");
+         RemovedList.updateAll((key, value)=>0);
+         RemovedList["qstn"]=questinList["qstn"];
+         
          await FirebaseFirestore.instance
             .collection(selectedYear.toString())
             .doc(selectedsubject.toString())
             .collection(selectedsubject.toString())
-            .doc(questinList["qstn"].toString())
-            .set(questinList);
+            .doc(RemovedList["qstn"].toString())
+            .set(RemovedList);
 
 
        }

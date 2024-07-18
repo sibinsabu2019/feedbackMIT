@@ -23,6 +23,7 @@ class _AddCredentialsState extends State<AddCredentials> {
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
   bool loading = false;
+    bool view =true;
   String SelectedDepatment = "Select Department";
   @override
   void initState() {
@@ -42,16 +43,18 @@ class _AddCredentialsState extends State<AddCredentials> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.3,
             ),
-            TextFileds(
+            TextFileds(view: false,
               controller: email,
               icon: Icons.email_rounded,
               label: "Enter email",
             ),
             TextFileds(
+              view: true,
                 controller: password,
                 icon: Icons.security,
                 label: "Enter password"),
             TextFileds(
+              view: false,
               controller: name,
               icon: Icons.person,
               label: " Enter your name",
@@ -74,42 +77,44 @@ class _AddCredentialsState extends State<AddCredentials> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Expanded(
-                                          child: ListView.builder(
-                                        itemCount: Provider.of<AdminProvider>(
-                                                context,
-                                                listen: false)
-                                            .DepartmentList
-                                            .length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    SelectedDepatment = Provider
-                                                            .of<AdminProvider>(
-                                                                context,
-                                                                listen: false)
-                                                        .DepartmentList[index];
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                                child: ListTile(
-                                                  title: Text(Provider.of<
-                                                              AdminProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .DepartmentList[index]),
-                                                )),
-                                          );
-                                        },
-                                      ))
-                                    ],
-                                  ),
+                                  content: 
+                                      
+                                           Expanded(
+                                             child: SizedBox(height: MediaQuery.of(context).size.height*0.5,
+                                             width: MediaQuery.of(context).size.width*0.5,
+                                               child: ListView.builder(
+                                                                                       itemCount: Provider.of<AdminProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .DepartmentList
+                                                .length,
+                                                                                       itemBuilder: (context, index) {
+                                                                                         return Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        SelectedDepatment = Provider
+                                                                .of<AdminProvider>(
+                                                                    context,
+                                                                    listen: false)
+                                                            .DepartmentList[index];
+                                                      });
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: ListTile(
+                                                      title: Text(Provider.of<
+                                                                  AdminProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .DepartmentList[index]),
+                                                    )),
+                                                                                         );
+                                                                                       },
+                                                                                    
+                                                                                 ),
+                                             ),
+                                           ),
                                 );
                               },
                             );
@@ -269,6 +274,7 @@ class _AddCredentialsState extends State<AddCredentials> {
 class TextFileds extends StatelessWidget {
   const TextFileds(
       {super.key,
+      required this.view,
       required this.controller,
       required this.icon,
       required this.label});
@@ -276,6 +282,7 @@ class TextFileds extends StatelessWidget {
   final TextEditingController controller;
   final IconData? icon;
   final String label;
+  final bool? view;
 
   @override
   Widget build(BuildContext context) {
@@ -295,6 +302,7 @@ class TextFileds extends StatelessWidget {
                   offset: const Offset(0, 3))
             ]),
         child: TextField(
+          obscureText:view! ,
           controller: controller,
           decoration: InputDecoration(
               prefixIcon: Icon(icon),

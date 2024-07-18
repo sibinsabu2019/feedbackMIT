@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,6 +30,8 @@ class facultyProvider extends ChangeNotifier
 
    Future<QuerySnapshot>fetchBarchart()async
    {
+    log("nother builder");
+  notifyListeners();
        QuerySnapshot querySnapshot= await FirebaseFirestore.instance.collection(selectedYear.toString()).doc(selectedsubject.toString()).collection(selectedsubject.toString()).get();
    return querySnapshot;
    }

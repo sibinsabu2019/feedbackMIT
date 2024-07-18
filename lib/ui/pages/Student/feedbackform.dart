@@ -16,6 +16,7 @@ class Feedbackform extends StatefulWidget {
 
 class _FeedbackformState extends State<Feedbackform> {
   bool loading=false;
+  
   @override
   Widget build(BuildContext context) {
     log("message");
@@ -49,60 +50,96 @@ class _FeedbackformState extends State<Feedbackform> {
                     itemBuilder: (context, index) {
                       DocumentSnapshot documentSnapshot = snapshot.data!.docs[index];
                       
-                    
-                      // List<String>data2=data.keys.toList();
-                      // log(data2.toString());
-                      
+                  // DocumentSnapshot dta=Provider.of<StudentProvider>(context,listen: false).dta!.docs[index];
+
+                
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: ()
                           { 
                             
+                                                
+                                                
+                                             
                            
                                 Map<String,dynamic>data3=documentSnapshot.data() as Map<String,dynamic>;
                               Map<String,dynamic>data=documentSnapshot.data() as Map<String,dynamic>;
+                              log(".............");
+                               log(".............");
+                               print(data);
+                                log(".............");
+                                 log(".............");
                               data.remove("qstn");
                               data.remove("total");
-                             List<String>data2=data.keys.toList();
-                             log(data2.toString());
+                            //  List<String>data2=data.keys.toList();
+                            //  log(data2.toString());
                               showDialog(context: context, builder: (context) {
                                 return AlertDialog(content: Container(height: 200,width: 200,
                                   
                                   child:
-                                   ListView.builder(itemCount: data2.length,
+                                   ListView.builder(itemCount: data.length,
                                     itemBuilder: (context, index) {
+                                      final key=data.keys.elementAt(index);
+                                          final value=data[key];
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: GestureDetector(onTap: ()async
                                         {
-                                          Navigator.of(context).pop();
-                                         int? changesMinus;
+                                          
+                                           Map<String,dynamic>demo={};
+                                         demo[key]=data[key];
+                                         Map<String,dynamic>demo2={};
+                                         demo2["qstn"]=documentSnapshot["qstn"];
+                                         demo2["value"]=key;
+                                           Map<String,dynamic>olddata= await Provider.of<StudentProvider>(context,listen: false).fetchOldFeedback(demo2["qstn"])as Map<String,dynamic>;
+                                           print("....${olddata.toString()}");
+                                          // Navigator.of(context).pop();
+                                        //  int? changesMinus;
                                          if (Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]==null) {
-                                           changesMinus=0;
+                                          //  changesMinus=0;
+                                          olddata["total"]=olddata["total"]+1;
+                                          olddata[key]=olddata[key]+value;
+                                        log("not rated");
+                                              
+                                             await  Provider.of<StudentProvider>(context,listen: false).updateForm(documentSnapshot["qstn"].toString(), olddata,demo2);
                                          }
-                                         else
-                                         {
-                                         changesMinus =data3[ Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]];
+                                         else{
+                                          if(key==Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"])
+                                          {
 
-                                           Provider.of<StudentProvider>(context,listen: false).qstnList[documentSnapshot["qstn"]]==documentSnapshot["qstn"]?
-                                          data3[ Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]]=changesMinus!-1:
-                                          log("messsgddgtff");
+                                          }
+                                          else{
+                                               olddata[Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]]=olddata[Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]]-data3[Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]];
+                                           log("alredy rated${Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]}");
+
+                                          olddata[key]=value;
+                                          await  Provider.of<StudentProvider>(context,listen: false).updateForm(documentSnapshot["qstn"].toString(), olddata,demo2);
+                                           
+
+                                          }
+                                        
+                                            
                                          }
+                                       
+                                        //  else{
+                                             
+                                        //  }
+                                        //  else
+                                        //  {
+                                        //  changesMinus =data3[ Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]];
+
+                                        //    Provider.of<StudentProvider>(context,listen: false).qstnList[documentSnapshot["qstn"]]==documentSnapshot["qstn"]?
+                                        //   data3[ Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]]=changesMinus!-1:
+                                        //   log("messsgddgtff");
+                                        //  }
+
+                                        
+                                        //  print("...${demo.toString()}....");
+                                       
+                                        Navigator.of(context).pop();
                                          
-                                          int changes=data3[data2[index]];
-                                          int total=data3["total"];
-                                          log(changes.toString());
-                                         
-                                          data3[data2[index]]=changes+1;
-                                            Provider.of<StudentProvider>(context,listen: false).qstnList[documentSnapshot["qstn"]]!=documentSnapshot["qstn"]? data3["total"]=
-                                         total+1
-                                         :log("alredy total added");
-                                          log(data3.toString());
-                                         Map<String,dynamic>data4={};
-                                          data4["qstn"]=documentSnapshot["qstn"];
-                                          data4["value"]=data2[index];
-                                        await  Provider.of<StudentProvider>(context,listen: false).updateForm(documentSnapshot["qstn"].toString(), data3,data4);
+                                        
                                          setState(() {
                                            loading=true;
                                          });
@@ -113,8 +150,9 @@ class _FeedbackformState extends State<Feedbackform> {
                                          });
                                          
                                         },
-                                          child: ListTile(title: Text(data2[index].toString()),
-                                          tileColor:Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]==data2[index]?
+                                          child: ListTile(
+                                            title: Text(key.toString()),
+                                          tileColor:Provider.of<StudentProvider>(context,listen: false).qstnList["${documentSnapshot["qstn"]}value"]==key?
                                           Colors.blue[200]:Colors.grey[300]
                                           ,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
                                           )),

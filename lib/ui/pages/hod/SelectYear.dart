@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feedback/provider/HodProvider.dart';
 import 'package:feedback/provider/facultyProvider.dart';
-import 'package:feedback/ui/pages/hod/subjcetHod.dart';
+import 'package:feedback/ui/pages/hod/SemHod.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class SelectYear extends StatelessWidget {
               child: GestureDetector(onTap: ()
               {
                  Provider.of<Hodprovider>(context,listen: false).selectedYear=documentSnapshot["year"];
-                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HodSub(),));
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const HodSem(),));
               },
               child: ListTile(title: Text(documentSnapshot["year"]),tileColor: Colors.grey[300],shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),),
               ),);
@@ -35,7 +35,9 @@ class SelectYear extends StatelessWidget {
            itemCount: snapshot.data!.size,);
         }
         return Center(child: CircularProgressIndicator(),);
-      },),)
+      },
+      )
+      ,)
     ],));
   }
 }

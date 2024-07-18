@@ -182,17 +182,21 @@ class _feedbackAminState extends State<feedbackAmin> {
                     //   _branchControllers.add(TextEditingController());
                     // });
 
-                    showDialog(context: context, builder: (context) => AlertDialog(content: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Expanded(
-                        child:ListView.builder(itemCount:Provider.of<CreateForm>(context,listen: false).subjectList.length ,
-                          itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(title: Text(Provider.of<CreateForm>(context,listen: false).subjectList[index].toString()),tileColor: Colors.grey[200],),
-                          );
-                        },)
-                      )
-                    ],),
+                    showDialog(context: context, builder: (context) => AlertDialog(content: SizedBox(
+                      height: MediaQuery.of(context).size.height*0.6,
+                      width: MediaQuery.of(context).size.width*0.5,
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Expanded(
+                          child:ListView.builder(itemCount:Provider.of<CreateForm>(context,listen: false).subjectList.length ,
+                            itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(title: Text(Provider.of<CreateForm>(context,listen: false).subjectList[index].toString()),tileColor: Colors.grey[200],),
+                            );
+                          },)
+                        )
+                      ],),
+                    ),
                     ),
                     );
                   

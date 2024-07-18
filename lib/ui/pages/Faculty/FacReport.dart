@@ -9,8 +9,8 @@ import 'package:pie_chart/pie_chart.dart';
 
 import 'package:provider/provider.dart';
 
-class Barchart extends StatelessWidget {
-  const Barchart({super.key});
+class FacReport extends StatelessWidget {
+  const FacReport({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +57,14 @@ class Barchart extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(height: 600,width:100,
+                    child: Container(
                     color: Colors.grey[100],
-                    child:Column(
+                    child:Column(crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text( documentSnapshot["qstn"],style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800),),
-                        Center(child: PieChart(dataMap: demo,chartRadius: MediaQuery.of(context).size.width/1.7,
-                        legendOptions: LegendOptions( legendPosition: LegendPosition.bottom,),chartValuesOptions: ChartValuesOptions(showChartValuesInPercentage: true,),
-                        ),),
+                        Text( documentSnapshot["qstn"],style: TextStyle(fontSize: 13,fontWeight: FontWeight.w100),),
+                        
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(top: 8),
                           child: Text("No of students Responded: ${documentSnapshot["total"]}",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.teal),),
                         )
                       ],

@@ -23,6 +23,7 @@ class _FacultyFormState extends State<FacultyForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       body: Stepper(currentStep: currentStep,
         onStepContinue: () {
          if(currentStep<1)

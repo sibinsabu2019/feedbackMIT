@@ -34,6 +34,7 @@ class StudentsFeedback extends StatelessWidget {
                     child: GestureDetector(onTap: ()
                     {
                       Provider.of<Hodprovider>(context,listen: false).uid=documentSnapshot["id"];
+                      Provider.of<Hodprovider>(context,listen: false).Department =documentSnapshot["branch"];
                       showDialog(context: context, builder: 
                       (context) => AlertDialog(content: Column(mainAxisSize: MainAxisSize.min, children: [Row(children: [
                         Flexible(flex: 1,

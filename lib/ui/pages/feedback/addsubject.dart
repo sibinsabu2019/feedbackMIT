@@ -75,7 +75,7 @@ Column(
                                   CustomSnackbar.success(context, "selected faculty is ${documentSnapshot["name"]}");
                                   Navigator.pop(context);
                                 },
-                                  child: ListTile(title: Text(documentSnapshot["name"].toString()),tileColor: Colors.grey[300],shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),)),
+                                  child: ListTile(title: Text(documentSnapshot["name"].toString()),subtitle: Text(documentSnapshot["branch"].toString()),tileColor: Colors.grey[300],shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),)),
                               );
                               
                             },);

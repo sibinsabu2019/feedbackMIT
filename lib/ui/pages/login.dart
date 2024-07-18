@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:feedback/loginSelection/loginAdmin.dart';
 import 'package:feedback/loginSelection/loginFaculty.dart';
@@ -21,6 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool view =true;
   String _selectedRole = 'student'; // Initial selected role
   final _formKey = GlobalKey<FormState>(); // Form key for validation
   TextEditingController Email = TextEditingController();
@@ -139,9 +141,16 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         const SizedBox(height: 20.0),
-                        TextFormField(
+                        TextFormField(obscureText:view,
                           controller: password,
                           decoration: InputDecoration(
+                          prefix: IconButton(onPressed: ()
+                          {
+                            setState(() {
+                              view=!view;
+                            });
+                          }, icon: Icon(view==true?Icons.visibility:Icons.visibility_off))
+                          ,
                             labelText: 'password',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(

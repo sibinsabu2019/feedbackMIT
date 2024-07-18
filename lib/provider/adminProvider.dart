@@ -25,6 +25,7 @@ class AdminProvider extends ChangeNotifier {
     selectedBranchStudents=null;
     selectedYearStudents=null;
     DepartmentList.clear();
+     Error=null;
 
   } 
    
@@ -222,6 +223,7 @@ Future<QuerySnapshot>fetchFeedback()async{
 }
    Future<void>FetchDepartment()async
    {
+    log("enter to the departmet list");
     DepartmentList.clear();
   QuerySnapshot querySnapshot=  await FirebaseFirestore.instance.collection("Department").get();
    for(int i=0;i<querySnapshot.size;i++)
@@ -229,7 +231,7 @@ Future<QuerySnapshot>fetchFeedback()async{
     DocumentSnapshot documentSnapshot=querySnapshot.docs[i];
      DepartmentList.add(documentSnapshot["branch"]);
    }
-    
+    log(DepartmentList.toString());
 
    }
 
